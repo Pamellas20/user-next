@@ -1,7 +1,6 @@
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
 
-// Define the User type with all required fields
 type User = {
   id: number;
   name: string;
@@ -17,21 +16,21 @@ type User = {
   };
 };
 
-// Define error type for fetch failures
+
 type FetchError = {
   message: string;
 };
 
-// Fetch user data with type-safe return
+
 async function getUser(id: string): Promise<User> {
   const res = await fetch(`https://jsonplaceholder.typicode.com/users/${id}`, {
-    cache: "no-store", // Ensure fresh data
+    cache: "no-store",
   });
   if (!res.ok) notFound();
   return res.json() as Promise<User>;
 }
 
-// Error boundary component
+
 type ErrorBoundaryProps = {
   error: FetchError | null;
   children: React.ReactNode;
@@ -49,7 +48,6 @@ function ErrorBoundary({ error, children }: ErrorBoundaryProps) {
   return <>{children}</>;
 }
 
-// User display component
 type UserDisplayProps = {
   user: User;
 };
@@ -79,7 +77,6 @@ function UserDisplay({ user }: UserDisplayProps) {
   );
 }
 
-// Main page component
 export default async function UserPage({ params }: { params: { id: string } }) {
   let user: User | null = null;
   let error: FetchError | null = null;
